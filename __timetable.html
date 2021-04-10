@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <style>
+    #customers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #customers td,
+    #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+      background-color: #ddd;
+    }
+
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #div1,
+    #div11,
+    #div12,
+    #div13,
+    #div14,
+    #div15,
+    #div16 {
+      float: left;
+      width: 170px;
+      height: 24px;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid black;
+    }
+  </style>
+  <script>
+    function save() {
+      localStorage.setItem('timetable', document.getElementById('customers').outerHTML);
+      alert("저장되었습니다.");
+    }
+
+    function restore() {
+      if(confirm("저장된 데이터를 불러오시겠습니까?")) {
+        document.getElementById('customers').outerHTML = localStorage.timetable;
+        alert("데이터를 불러왔습니다.");
+      }
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      var pName = document.getElementById(data).parentElement.nodeName;
+      var tName = ev.target.nodeName;
+      if (pName == "DIV") {
+        if (tName == "DIV") {} else if (tName == "TD") {
+          ev.target.innerHTML = document.getElementById(data).outerHTML.replace(/lbl/i, parseInt(Math.random() *
+            10000));
+        } else if (tName == "LABEL") {
+          ev.target.parentElement.innerHTML = document.getElementById(data).outerHTML.replace(/lbl/i, parseInt(Math
+            .random() * 10000));
+        } else {}
+      } else if (pName == "TD") {
+        if (tName == "DIV") {} else if (tName == "TD") {
+          ev.target.appendChild(document.getElementById(data));
+        } else if (tName == "LABEL") {
+          if (ev.target.parentElement.nodeName == "TD") {
+            ev.target.parentElement.innerHTML = document.getElementById(data).outerHTML;
+            document.getElementById(data).outerHTML = '';
+          } else {
+            document.getElementById(data).outerHTML = '';
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <h2>Drag and Drop Time-Table</h2>
+  <p>Drag the image back and forth between the two div elements.</p>
+
+  <div>
+    <button type="button" onclick="save()">저장</button>
+    <button type="button" onclick="restore()">불러오기</button>
+  </div>
+
+  <div id="div11" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <label draggable="true" ondragstart="drag(event)" id="lbl11">웹프로그래밍</label>
+  </div>
+  <div id="div12" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <label draggable="true" ondragstart="drag(event)" id="lbl12">기초프로그래밍</label>
+  </div>
+  <div id="div13" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <label draggable="true" ondragstart="drag(event)" id="lbl13">시스템프로그래밍</label>
+  </div>
+  <div id="div14" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <label draggable="true" ondragstart="drag(event)" id="lbl14">프로그래밍 실무 1</label>
+  </div>
+  <div id="div15" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <label draggable="true" ondragstart="drag(event)" id="lbl15">SW개발보안 구축</label>
+  </div>
+  <div id="div16" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <label draggable="true" ondragstart="drag(event)" id="lbl16">기업실무 프로그래밍 1</label>
+  </div>
+
+  <table id="customers">
+    <tr>
+      <th style="width:10%">시간</th>
+      <th style="width:15%">월</th>
+      <th style="width:15%">화</th>
+      <th style="width:15%">수</th>
+      <th style="width:15%">목</th>
+      <th style="width:15%">금</th>
+      <th style="width:15%">토</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+      <td ondrop="drop(event)" ondragover="allowDrop(event)" contenteditable="true"></td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

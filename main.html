@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nested Layout - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.9.14/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.9.14/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.9.14/demo/demo.css">
+    <script type="text/javascript" src="jquery-easyui-1.9.14/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.9.14/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="text.css">
+    <script>
+        $(function(){
+            $('.left .item').draggable({
+                revert:true,
+                proxy:'clone'
+            });
+            $('.right td.drop').droppable({
+                accept: '.item',
+                onDragEnter:function(){
+                    $(this).addClass('over');
+                },
+                onDragLeave:function(){
+                    $(this).removeClass('over');
+                },
+                onDrop:function(e,source){
+                    $(this).removeClass('over');
+                    if ($(source).hasClass('assigned')){
+                        $(this).append(source);
+                    } else {
+                        var c = $(source).clone().addClass('assigned');
+                        $(this).empty().append(c);
+                        c.draggable({
+                            revert:true
+                        });
+                    }
+                }
+            });
+            $('.left').droppable({
+                accept:'.assigned',
+                onDragEnter:function(e,source){
+                    $(source).addClass('trash');
+                },
+                onDragLeave:function(e,source){
+                    $(source).removeClass('trash');
+                },
+                onDrop:function(e,source){
+                    $(source).remove();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Nested Layout</h2>
+    <p>The layout region panel contains another layout or other components.</p>
+    <div style="margin:20px 0;"></div>
+    <div class="easyui-layout" style="width:1050px;height:800px;">
+        <div data-options="region:'north'" style="height:150px; overflow: hidden;border: 0;">
+            <div class="easyui-tabs" style="width:100%;height:150px">
+                <div title="About" style="padding:10px">
+                    <p style="font-size:14px">jQuery EasyUI framework helps you build your web pages easily.</p>
+                    <ul>
+                        <li>easyui is a collection of user-interface plugin based on jQuery.</li>
+                        <li>easyui provides essential functionality for building modem, interactive, javascript applications.</li>
+                        <li>using easyui you don't need to write many javascript code, you usually defines user-interface by writing some HTML markup.</li>
+                        <li>complete framework for HTML5 web page.</li>
+                        <li>easyui save your time and scales while developing your products.</li>
+                        <li>easyui is very easy but powerful.</li>
+                    </ul>
+                </div>
+                <div title="Help" data-options="iconCls:'icon-help',closable:true" style="padding:10px">
+                    This is the help content.
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'south',split:true" style="height:50px;"></div>
+        <div data-options="region:'east',split:true" title="East" style="width:180px;">
+            <div class="easyui-panel" style="padding:0px;border: 0;width:100%;">
+                <div class="easyui-accordion" style="width:100%;border: 0;">
+                    <div title="TreeMenu" data-options="iconCls:'icon-search'" style="padding:10px 0;">
+                        <ul class="easyui-tree">
+                            <li>
+                                <span>My Documents</span>
+                                <ul>
+                                    <li data-options="state:'closed'">
+                                        <span>Photos</span>
+                                        <ul>
+                                            <li>
+                                                <span>Friend</span>
+                                            </li>
+                                            <li>
+                                                <span>Wife</span>
+                                            </li>
+                                            <li>
+                                                <span>Company</span>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span>Program Files</span>
+                                        <ul>
+                                            <li>Intel</li>
+                                            <li>Amd</li>
+                                        </ul>
+                                    </li>
+                                    <li>index.html</li>
+                                    <li>about.html</li>
+                                    <li>welcome.html</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'west',split:true" title="West" style="width:130px;">
+            <div class="left">
+                <table>
+                    <tr>
+                        <td><div class="item">시스템</br>프로그래밍</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="item">기초</br>프로그래밍</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="item">웹</br>프로그래밍</div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div data-options="region:'center',iconCls:'icon-ok'" title="Center" style="width:100%; padding:5px;">
+            <div class="easyui-layout" data-options="fit:true">
+                <div class="right">
+                    <table>
+                        <tr>
+                            <td class="blank"></td>
+                            <td class="title">월</td>
+                            <td class="title">화</td>
+                            <td class="title">수</td>
+                            <td class="title">목</td>
+                            <td class="title">금</td>
+                            <td class="title">토</td>
+                        </tr>
+                        <tr>
+                            <td class="time">08:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">09:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">10:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">11:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">12:00</td>
+                            <td class="lunch" colspan="6">Lunch</td>
+                        </tr>
+                        <tr>
+                            <td class="time">13:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">14:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">15:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                        <tr>
+                            <td class="time">16:00</td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                            <td class="drop"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</body>
+</html>
