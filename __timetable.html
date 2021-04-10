@@ -60,6 +60,10 @@
       }
     }
 
+    function clear_page() {
+      location.reload();
+    }
+
     function allowDrop(ev) {
       ev.preventDefault();
     }
@@ -104,6 +108,7 @@
   <div>
     <button type="button" onclick="save()">저장</button>
     <button type="button" onclick="restore()">불러오기</button>
+    <button type="button" onclick="clear_page()">초기화</button>
   </div>
 
   <div id="div11" ondrop="drop(event)" ondragover="allowDrop(event)">
